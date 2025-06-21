@@ -78,6 +78,9 @@ p {
 .container .slide-6 img {
     zoom: 1.20;
 }
+.container .slide-7 img {
+    zoom: 0.75;
+}
 .container button {
     cursor: pointer;
     font-family: "Gochi Hand", cursive;
