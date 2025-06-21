@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love Dane</title>
+    <link rel="icon" href="static/img/love.jpg">
+    <link rel="apple-touch-icon" href="static/img/love.jpg">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="slide-1" class="slide-1">
+            <div class="img"><img src="static/img/image-1.gif"></div>
+            <h3>Hi my love Dane! This is for you.</h3>
+            <p>Please take your time my love.</p>
+            <button><span>Next</span></button>
+        </div>
+        <div id="slide-2" class="slide-2" style="display: none;">
+            <div class="img"><img src="static/img/image-2.gif"></div>
+            <h3>I'm really sorry for hurting you.</h3>
+            <p>I know I made mistakes my love, and I regret them deeply.</p>
+            <button><span>Okay</span></button>
+        </div>
+        <div id="slide-3" class="slide-3" style="display: none;">
+            <div class="img"><img src="static/img/image-3.gif"></div>
+            <h3>Do you remember our happy moments?</h3>
+            <p>Those moments are my favorite my love. I want more of them with you.</p>
+            <button><span>Okay</span></button>
+        </div>
+        <div id="slide-4" class="slide-4" style="display: none;">
+            <div class="img"><img src="static/img/image-4.gif"></div>
+            <h3>You are the best thing that ever happened to me.</h3>
+            <p>Thank you for your love, your patience, and your beautiful heart my love.</p>
+            <button><span>Okay</span></button>
+        </div>
+        <div id="slide-5" class="slide-5" style="display: none;">
+            <div class="img"><img src="static/img/image-5.gif"></div>
+            <h3>I promise to be better for you and for us.</h3>
+            <p>No more excuses my love. Only growth. Only love. Only you.</p>
+            <button><span>Okay</span></button>
+        </div>
+        <div id="slide-6" class="slide-6" style="display: none;">
+            <div class="img"><img src="static/img/image-6.gif"></div>
+            <h3>Will you forgive me?</h3>
+            <p>I don't want to lose you, my love. Please let's heal together.</p>
+            <button id="slide-6-btn1"><span>Yes, I forgive you ❤️</span></button>
+            <button id="slide-6-btn2"><span>Let's talk first</span></button>
+        </div>
+        <div id="slide-7" class="slide-7" style="display: none;">
+            <div class="img"><img src="static/img/image-2.gif"></div>
+            <h3>Whatever happens, I love you endlessly.</h3>
+            <p>You are my forever, Dane. Always have, always will.</p>
+            <button id="slide-7-btn1"><span>Restart</span></button>
+            <button id="slide-7-btn2"><span>I'll unblock you and message me</span></button>
+        </div>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+        import {
+            getFirestore, collection, doc, query, addDoc, serverTimestamp, getDoc, updateDoc
+        } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACGoc6lsu92SIBil2oA-FEfVkAocIpe00",
+            authDomain: "todo-list-c310f.firebaseapp.com",
+            projectId: "todo-list-c310f",
+            storageBucket: "todo-list-c310f.firebasestorage.app",
+            messagingSenderId: "1954381734",
+            appId: "1:1954381734:web:466c42e5ddbcea8dcd1967",
+            measurementId: "G-2RK9RRWMC2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        let docId = "";
+
+        let slide1 = document.getElementById("slide-1");
+        let slide2 = document.getElementById("slide-2");
+        let slide3 = document.getElementById("slide-3");
+        let slide4 = document.getElementById("slide-4");
+        let slide5 = document.getElementById("slide-5");
+        let slide6 = document.getElementById("slide-6");
+        let slide7 = document.getElementById("slide-7");
+
+        slide1.querySelector("button").addEventListener("click", async function() {
+            const docRef = await addDoc(collection(db, "love-dane"), {
+                slide6_answer: "",
+                slide7_answer: "",
+                timestamp_created: serverTimestamp(),
+                timestamp_step6_created: "",
+                timestamp_step7_created: ""
+            });
+            docId = docRef.id;
+
+            showSlide2();
+        });
+
+        slide2.querySelector("button").addEventListener("click", function() {
+            showSlide3();
+        });
+
+        slide3.querySelector("button").addEventListener("click", function() {
+            showSlide4();
+        });
+
+        slide4.querySelector("button").addEventListener("click", function() {
+            showSlide5();
+        });
+
+        slide5.querySelector("button").addEventListener("click", function() {
+            showSlide6();
+        });
+
+        slide6.querySelector("#slide-6-btn1").addEventListener("click", async function() {
+            await updateDoc(doc(db, "love-dane", docId), {
+                slide6_answer: "Yes, I forgive you",
+                timestamp_step6_created: serverTimestamp()
+            });
+
+            showSlide7();
+        });
+
+        slide6.querySelector("#slide-6-btn2").addEventListener("click", async function() {
+            await updateDoc(doc(db, "love-dane", docId), {
+                slide6_answer: "Let's talk first",
+                timestamp_step6_created: serverTimestamp()
+            });
+
+            showSlide7();
+        });
+
+        slide7.querySelector("#slide-7-btn1").addEventListener("click", async function() {
+            await updateDoc(doc(db, "love-dane", docId), {
+                slide7_answer: "Restart",
+                timestamp_step7_created: serverTimestamp()
+            });
+
+            docId = "";
+            showSlide1();
+        });
+
+        slide7.querySelector("#slide-7-btn2").addEventListener("click", async function() {
+            await updateDoc(doc(db, "love-dane", docId), {
+                slide7_answer: "I'll unblock you and message me",
+                timestamp_step7_created: serverTimestamp()
+            });
+
+            alert("Thank you my love! I'll message you right away.");
+            docId = "";
+            showSlide1();
+        });
+
+        function showSlide1() {
+            slide1.classList.remove("hidden");
+            slide2.classList.add("hidden");
+            slide3.classList.add("hidden");
+            slide4.classList.add("hidden");
+            slide5.classList.add("hidden");
+            slide6.classList.add("hidden");
+            slide7.classList.add("hidden");
+            setTimeout(function() {
+                slide1.style.display = "inherit";
+                slide2.style.display = "none";
+                slide3.style.display = "none";
+                slide4.style.display = "none";
+                slide5.style.display = "none";
+                slide6.style.display = "none";
+                slide7.style.display = "none";
+            }, 500);
+        }
+
+        function showSlide2() {
+            slide1.classList.add("hidden");
+            slide2.classList.remove("hidden");
+            slide3.classList.add("hidden");
+            slide4.classList.add("hidden");
+            slide5.classList.add("hidden");
+            slide6.classList.add("hidden");
+            slide7.classList.add("hidden");
+            setTimeout(function() {
+                slide1.style.display = "none";
+                slide2.style.display = "inherit";
+                slide3.style.display = "none";
+                slide4.style.display = "none";
+                slide5.style.display = "none";
+                slide6.style.display = "none";
+                slide7.style.display = "none";
+            }, 500);
+        }
+        
+        function showSlide3() {
+            slide1.classList.add("hidden");
+            slide2.classList.add("hidden");
+            slide3.classList.remove("hidden");
+            slide4.classList.add("hidden");
+            slide5.classList.add("hidden");
+            slide6.classList.add("hidden");
+            slide7.classList.add("hidden");
+            setTimeout(function() {
+                slide1.style.display = "none";
+                slide2.style.display = "none";
+                slide3.style.display = "inherit";
+                slide4.style.display = "none";
+                slide5.style.display = "none";
+                slide6.style.display = "none";
+                slide7.style.display = "none";
+            }, 500);
+        }
+
+        function showSlide4() {
+            slide1.classList.add("hidden");
+            slide2.classList.add("hidden");
+            slide3.classList.add("hidden");
+            slide4.classList.remove("hidden");
+            slide5.classList.add("hidden");
+            slide6.classList.add("hidden");
+            slide7.classList.add("hidden");
+            setTimeout(function() {
+                slide1.style.display = "none";
+                slide2.style.display = "none";
+                slide3.style.display = "none";
+                slide4.style.display = "inherit";
+                slide5.style.display = "none";
+                slide6.style.display = "none";
+                slide7.style.display = "none";
+            }, 500);
+        }
+
+        function showSlide5() {
+            slide1.classList.add("hidden");
+            slide2.classList.add("hidden");
+            slide3.classList.add("hidden");
+            slide4.classList.add("hidden");
+            slide5.classList.remove("hidden");
+            slide6.classList.add("hidden");
+            slide7.classList.add("hidden");
+            setTimeout(function() {
+                slide1.style.display = "none";
+                slide2.style.display = "none";
+                slide3.style.display = "none";
+                slide4.style.display = "none";
+                slide5.style.display = "inherit";
+                slide6.style.display = "none";
+                slide7.style.display = "none";
+            }, 500);
+        }
+
+        function showSlide6() {
+            slide1.classList.add("hidden");
+            slide2.classList.add("hidden");
+            slide3.classList.add("hidden");
+            slide4.classList.add("hidden");
+            slide5.classList.add("hidden");
+            slide6.classList.remove("hidden");
+            slide7.classList.add("hidden");
+            setTimeout(function() {
+                slide1.style.display = "none";
+                slide2.style.display = "none";
+                slide3.style.display = "none";
+                slide4.style.display = "none";
+                slide5.style.display = "none";
+                slide6.style.display = "inherit";
+                slide7.style.display = "none";
+            }, 500);
+        }
+
+        function showSlide7() {
+            slide1.classList.add("hidden");
+            slide2.classList.add("hidden");
+            slide3.classList.add("hidden");
+            slide4.classList.add("hidden");
+            slide5.classList.add("hidden");
+            slide6.classList.add("hidden");
+            slide7.classList.remove("hidden");
+            setTimeout(function() {
+                slide1.style.display = "none";
+                slide2.style.display = "none";
+                slide3.style.display = "none";
+                slide4.style.display = "none";
+                slide5.style.display = "none";
+                slide6.style.display = "none";
+                slide7.style.display = "inherit";
+            }, 500);
+        }
+    </script>
+</body>
+</html>

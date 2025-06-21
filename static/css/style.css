@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+:root {
+    --color-1: #ffb6c1;
+    --color-2: #ffd1dc;
+    --color-3: #ffe4e1;
+    --color-4: #fff0f5;
+    --color-5: #faebd7;
+
+    --color-6: #574225;
+}
+
+* {
+    font-family: 'Poppins';
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-2);
+}
+
+h3 {
+    color: var(--color-6);
+}
+
+p {
+    color: var(--color-6);
+    font-size: 12px;
+    text-align: center;
+}
+
+.container {
+    text-align: center;
+    max-width: 400px;
+    overflow: hidden;
+}
+.container .hidden {
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.container .img {
+    height: 300px;
+    width: 300px;
+    margin: auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container img {
+    height: 300px;
+    width: 300px;
+    object-fit: contain;
+}
+.container .slide-1 img {
+    margin-left: -23px;
+}
+.container .slide-2 img {
+    zoom: 0.75;
+}
+.container .slide-3 img {
+    zoom: 0.95;
+}
+.container .slide-5 img {
+    zoom: 1.20;
+}
+.container .slide-6 img {
+    zoom: 1.20;
+}
+.container button {
+    cursor: pointer;
+    font-family: "Gochi Hand", cursive;
+    color: var(--color-6);
+    font-size: 15px;
+    width: 125px;
+    margin: 10px;
+    margin-top: 50px;
+    padding: 0;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    border: none;
+    transform: rotate(5deg);
+    transform-origin: center;
+    box-shadow: 0 2px 0 var(--color-6);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background-color: var(--color-1);
+}
+.container button span {
+    display: block;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--color-6);
+    border-radius: 5px;
+    background: #fff;
+}
+.container button:active {
+    transform: translateY(5px);
+    padding-bottom: 0px;
+    outline: 0;
+}

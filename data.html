@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love Dane - Data</title>
+    <link rel="icon" href="static/img/love.jpg">
+    <link rel="apple-touch-icon" href="static/img/love.jpg">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+    * {
+        font-family: "Poppins";
+        font-size: 12px;
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+</head>
+<body>
+    <table id="love-table" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Created</th>
+                <th>Slide 6 Answer</th>
+                <th>Slide 6 Created</th>
+                <th>Slide 7 Answer</th>
+                <th>Slide 7 Created</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+        import {
+            getFirestore, collection, getDocs
+        } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyACGoc6lsu92SIBil2oA-FEfVkAocIpe00",
+            authDomain: "todo-list-c310f.firebaseapp.com",
+            projectId: "todo-list-c310f",
+            storageBucket: "todo-list-c310f.firebasestorage.app",
+            messagingSenderId: "1954381734",
+            appId: "1:1954381734:web:466c42e5ddbcea8dcd1967",
+            measurementId: "G-2RK9RRWMC2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        window.addEventListener("DOMContentLoaded", loadLoveDaneData);
+
+        async function loadLoveDaneData() {
+            const querySnapshot = await getDocs(collection(db, "love-dane"));
+
+            let tableBody = document.querySelector("#love-table tbody");
+            tableBody.innerHTML = "";
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${doc.id}</td>
+                    <td>${data.timestamp_created?.toDate().toLocaleString() || "-"}</td>
+                    <td>${data.slide6_answer || "-"}</td>
+                    <td>${data.timestamp_step6_created?.toDate().toLocaleString() || "-"}</td>
+                    <td>${data.slide7_answer || "-"}</td>
+                    <td>${data.timestamp_step7_created?.toDate().toLocaleString() || "-"}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
