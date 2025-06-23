@@ -67,9 +67,9 @@
                     <td>${doc.id}</td>
                     <td>${data.timestamp_created?.toDate().toLocaleString() || "-"}</td>
                     <td>${data.slide6_answer || "-"}</td>
-                    <td>${data.timestamp_step6_created?.toDate().toLocaleString() || "-"}</td>
+                    <td>${data.timestamp_step6_created != "" ? data.timestamp_step6_created.toDate().toLocaleString() : "-"}</td>
                     <td>${data.slide7_answer || "-"}</td>
-                    <td>${data.timestamp_step7_created?.toDate().toLocaleString() || "-"}</td>
+                    <td>${data.timestamp_step7_created != "" ? data.timestamp_step7_created.toDate().toLocaleString() : "-"}</td>
                 `;
                 tableBody.appendChild(row);
             });
